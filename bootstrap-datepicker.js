@@ -451,6 +451,12 @@
 			});
 		},
 
+    setMinViewMode: function (mode) {
+      if (typeof mode !== 'undefined') {
+        this.o.minViewMode = mode;
+      }
+    },
+
 		show: function(){
 			if (!this.isInline)
 				this.picker.appendTo('body');
