@@ -451,6 +451,12 @@
 			});
 		},
 
+    setLastDayOfMonth: function (data) {
+      if (typeof data === 'boolean') {
+        this.o.getLastDayOfMonth = data;
+      }
+    },
+
     setMinViewMode: function (mode) {
       if (typeof mode !== 'undefined') {
         this.o.minViewMode = mode;
@@ -1063,9 +1069,16 @@
 						if (!target.is('.disabled')){
 							this.viewDate.setUTCDate(1);
 							if (target.is('.month')){
-								day = 1;
+                day = 1;
 								month = target.parent().find('span').index(target);
 								year = this.viewDate.getUTCFullYear();
+
+                if (this.o.getLastDayOfMonth) {
+                  var date = new Date(year + '-' + month + '-' + day);
+                  day = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+                  day = day.getDate();
+                }
+
 								this.viewDate.setUTCMonth(month);
 								this._trigger('changeMonth', this.viewDate);
 								if (this.o.minViewMode === 1){
@@ -1517,7 +1530,8 @@
 		startView: 0,
 		todayBtn: false,
 		todayHighlight: false,
-		weekStart: 0
+		weekStart: 0,
+    getLastDayOfMonth: false
 	};
 	var locale_opts = $.fn.datepicker.locale_opts = [
 		'format',
