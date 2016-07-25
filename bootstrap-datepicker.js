@@ -596,7 +596,6 @@
 				}
 			}
 			else {
-        console.log('Format SEC:', formatted, minViewMode);
         formatted = this.handleMinViewMode(formatted, minViewMode);
 				this.element.val(formatted).change();
 			}
