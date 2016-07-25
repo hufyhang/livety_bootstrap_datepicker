@@ -1074,7 +1074,8 @@
 								year = this.viewDate.getUTCFullYear();
 
                 if (this.o.getLastDayOfMonth) {
-                  var date = new Date(year + '-' + month + '-' + day);
+                  // Seems `month` is 0-based
+                  var date = new Date(year + '-' + (month + 1) + '-' + day);
                   day = new Date(date.getFullYear(), date.getMonth() + 1, 0);
                   day = day.getDate();
                 }
