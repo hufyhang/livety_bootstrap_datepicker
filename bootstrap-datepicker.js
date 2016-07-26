@@ -611,15 +611,21 @@
 			}).join(this.o.multidateSeparator);
 		},
 
-		setStartDate: function(startDate){
+		setStartDate: function(startDate, ceaseEvent){
+      if (typeof ceaseEvent === 'undefined') {
+        ceaseEvent = false;
+      }
 			this._process_options({startDate: startDate});
-			this.update();
+			this.update(ceaseEvent);
 			this.updateNavArrows();
 		},
 
-		setEndDate: function(endDate){
+		setEndDate: function(endDate, ceaseEvent){
+      if (typeof ceaseEvent === 'undefined') {
+        ceaseEvent = false;
+      }
 			this._process_options({endDate: endDate});
-			this.update();
+			this.update(ceaseEvent);
 			this.updateNavArrows();
 		},
 
@@ -743,7 +749,7 @@
 		},
 
 		_allow_update: true,
-		update: function(){
+		update: function(ceaseEvent){
 			if (!this._allow_update)
 				return;
 
@@ -751,12 +757,14 @@
 				dates = [],
 				fromArgs = false;
 			if (arguments.length){
-				$.each(arguments, $.proxy(function(i, date){
-					if (date instanceof Date)
-						date = this._local_to_utc(date);
-					dates.push(date);
-				}, this));
-				fromArgs = true;
+        if (arguments.length !== 1 && typeof arguments[0] !== 'boolean') {
+          $.each(arguments, $.proxy(function(i, date){
+            if (date instanceof Date)
+              date = this._local_to_utc(date);
+            dates.push(date);
+          }, this));
+          fromArgs = true;
+        }
 			}
 			else {
 				dates = this.isInput
@@ -795,10 +803,14 @@
 			else if (dates.length){
 				// setting date by typing
 				if (String(oldDates) !== String(this.dates))
-					this._trigger('changeDate');
+          if (ceaseEvent === false) {
+            this._trigger('changeDate');
+          }
 			}
 			if (!this.dates.length && oldDates.length)
-				this._trigger('clearDate');
+        if (ceaseEvent === false) {
+          this._trigger('clearDate');
+        }
 
 			this.fill();
 		},
