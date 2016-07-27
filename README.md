@@ -15,3 +15,7 @@ Set min view mode for the selected date picker. Parameter `minView` indicates mi
 * `.datepicker('setLastDayOfMonth', trueOrFalse)`
 
 When `setLastDayOfMonth` is set to `true`, date picker will automatically calculate and append the last date of the selected month to the return/output date value. Otherwise, the first date will be appended.
+
+* `.datepicker('setStartDate', ceaseChangeDateEvent)` & `.datepicker('setEndDate', ceaseChangeDateEvent)`
+
+An extra optional `ceaseChangeDateEvent` parameter is provided to `setStartDate` and `setEndDate` to prevent date picker instances from triggering `changeDate` event when start/end date get changed.
