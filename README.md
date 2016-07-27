@@ -1,0 +1,17 @@
+### Forked from and based on [bootstrap-datepicker](https://github.com/eternicode/bootstrap-datepicker/)
+
+### Requirements
+
+Notice that to use this very fork, a `data-date-format` attribute __MUST__ be presented in the `html` node in DOM. It's format could be, for example, `d/m/Y`.
+
+### Changes
+
+In addition to the original method and options, this fork provided:
+
+* `.datepicker('setMinViewMode', minView)`
+
+Set min view mode for the selected date picker. Parameter `minView` indicates min view mode, i.e. 0 === day, 1 === month, 2 === year.
+
+* `.datepicker('setLastDayOfMonth', trueOrFalse)`
+
+When `setLastDayOfMonth` is set to `true`, date picker will automatically calculate and append the last date of the selected month to the return/output date value. Otherwise, the first date will be appended.
