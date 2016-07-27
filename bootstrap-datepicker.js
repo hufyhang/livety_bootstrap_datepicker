@@ -1436,7 +1436,11 @@
           $notBtn = $('<th colspan="7" class="not-sure-date" style="display: table-cell;">' + text + '</th>');
 
           var that = this;
-          $notBtn.on('click', function () {
+          var event = 'click';
+          if (__isMobile) {
+            event = 'touchend';
+          }
+          $notBtn.on(event, function () {
             var picked = window.__datepicker_pickedDate;
             that._setDate(UTCDate(picked.year, picked.month, picked.day), undefined, that.o.minViewMode);
           });
