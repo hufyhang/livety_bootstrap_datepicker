@@ -19,3 +19,11 @@ When `setLastDayOfMonth` is set to `true`, date picker will automatically calcul
 * `.datepicker('setStartDate', ceaseChangeDateEvent)` & `.datepicker('setEndDate', ceaseChangeDateEvent)`
 
 An extra optional `ceaseChangeDateEvent` parameter is provided to `setStartDate` and `setEndDate` to prevent date picker instances from triggering `changeDate` event when start/end date get changed.
+
+* `.datepicker('allowNotSureDate', trueOrFalse)`
+
+When `trueOrFalse` is set to `true`, date picker adds a `not sure exact date` button to day view.
+
+* `.datepicker('notSureDateText', text)`
+
+Set the text shown on `not sure exact day` button.

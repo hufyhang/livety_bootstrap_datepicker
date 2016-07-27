@@ -457,6 +457,23 @@
       }
     },
 
+    allowNotSureDate: function (flag) {
+      if (typeof flag === 'boolean') {
+        this.o.notSureDate = flag;
+      } else {
+        return this.o.notSureDate;
+      }
+    },
+
+    notSureDateText: function (txt) {
+      if (typeof txt === 'string') {
+        this.o.notSureDateText = txt;
+      } else {
+        return this.o.notSureDateText;
+      }
+
+    },
+
     setMinViewMode: function (mode) {
       if (typeof mode !== 'undefined') {
         this.o.minViewMode = mode;
@@ -1121,6 +1138,13 @@
 
 								this.viewDate.setUTCMonth(month);
 								this._trigger('changeMonth', this.viewDate);
+
+                window.__datepicker_pickedDate = {
+                  day: day,
+                  month: month,
+                  year: year
+                };
+
 								if (this.o.minViewMode === 1){
 									this._setDate(UTCDate(year, month, day), undefined, this.o.minViewMode);
 								}
@@ -1401,6 +1425,26 @@
 				.filter('.datepicker-'+DPGlobal.modes[this.viewMode].clsName)
 					.css('display', 'block');
 			this.updateNavArrows();
+
+      // Add not sure which date button for day view
+      if (this.o.notSureDate === true && this.viewMode === 0) {
+        $clearBtn = $('.datepicker-days:visible').find('.clear');
+        $notBtn = $('.datepicker-days:visible').find('.not-sure-date');
+        if ($notBtn.length === 0) {
+
+          var text = this.o.notSureDateText;
+          $notBtn = $('<th colspan="7" class="not-sure-date" style="display: table-cell;">' + text + '</th>');
+
+          var that = this;
+          $notBtn.on('click', function () {
+            var picked = window.__datepicker_pickedDate;
+            that._setDate(UTCDate(picked.year, picked.month, picked.day), undefined, that.o.minViewMode);
+          });
+
+          $clearBtn.closest('tr').before($notBtn);
+          $notBtn.wrap('<tr></tr>');
+        }
+      }
     }
 	};
 
@@ -1571,7 +1615,9 @@
 		todayBtn: false,
 		todayHighlight: false,
 		weekStart: 0,
-    getLastDayOfMonth: false
+    getLastDayOfMonth: false,
+    notSureDate: false,
+    notSureDateText: 'Not Sure Exact Day'
 	};
 	var locale_opts = $.fn.datepicker.locale_opts = [
 		'format',
