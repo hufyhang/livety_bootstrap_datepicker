@@ -757,7 +757,7 @@
 				dates = [],
 				fromArgs = false;
 			if (arguments.length){
-        if (arguments.length !== 1 && typeof arguments[0] !== 'boolean') {
+        if (typeof arguments[0] !== 'boolean') {
           $.each(arguments, $.proxy(function(i, date){
             if (date instanceof Date)
               date = this._local_to_utc(date);
