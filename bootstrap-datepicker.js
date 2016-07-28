@@ -451,6 +451,18 @@
 			});
 		},
 
+    beforeNotSureDate: function (fn) {
+      if (typeof fn === 'function') {
+        this.o.beforeNotSureDate = fn;
+      }
+    },
+
+    afterNotSureDate: function (fn) {
+      if (typeof fn === 'function') {
+        this.o.afterNotSureDate = fn;
+      }
+    },
+
     setLastDayOfMonth: function (data) {
       if (typeof data === 'boolean') {
         this.o.getLastDayOfMonth = data;
@@ -1445,9 +1457,18 @@
           }
           $notBtn.on(event, function () {
             var picked = window.__datepicker_pickedDate;
+
+            if (typeof that.o.beforeNotSureDate === 'function') {
+              that.o.beforeNotSureDate(picked);
+            }
+
             window.__bootstrap_datepicker_empty_date = true;
             that._setDate(UTCDate(picked.year, picked.month, picked.day), undefined, that.o.minViewMode);
             window.__bootstrap_datepicker_empty_date = null;
+
+            if (typeof that.o.afterNotSureDate === 'function') {
+              that.o.afterNotSureDate(picked);
+            }
           });
 
           $clearBtn.closest('tr').before($notBtn);
@@ -1626,7 +1647,9 @@
 		weekStart: 0,
     getLastDayOfMonth: false,
     notSureDate: false,
-    notSureDateText: 'Not Sure Exact Day'
+    notSureDateText: 'Not Sure Exact Day',
+    beforeNotSureDate: null,
+    afterNotSureDate: null
 	};
 	var locale_opts = $.fn.datepicker.locale_opts = [
 		'format',

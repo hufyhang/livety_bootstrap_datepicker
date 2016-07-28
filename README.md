@@ -27,3 +27,11 @@ When `trueOrFalse` is set to `true`, date picker adds a `not sure exact date` bu
 * `.datepicker('notSureDateText', text)`
 
 Set the text shown on `not sure exact day` button.
+
+* `.datepicker('beforeSureDateText', function)`
+
+Set the function to be triggered before date picker set-value event is triggered when clicking `not sure exact day` button.
+
+* `.datepicker('afterSureDateText', function)`
+
+Set the function to be triggered after date picker set-value event is triggered when clicking `not sure exact day` button.
