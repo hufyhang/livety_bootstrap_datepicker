@@ -580,6 +580,9 @@
 		setUTCDate: alias('setUTCDates'),
 
     handleMinViewMode: function (formatted, minViewMode) {
+      if (window.__bootstrap_datepicker_empty_date === true) {
+        minViewMode = 1;
+      }
       // If minViewMode is 1, remove `day`...
       if (minViewMode === 1) {
         var _format = $('html').attr('data-date-format');
@@ -1442,7 +1445,9 @@
           }
           $notBtn.on(event, function () {
             var picked = window.__datepicker_pickedDate;
+            window.__bootstrap_datepicker_empty_date = true;
             that._setDate(UTCDate(picked.year, picked.month, picked.day), undefined, that.o.minViewMode);
+            window.__bootstrap_datepicker_empty_date = null;
           });
 
           $clearBtn.closest('tr').before($notBtn);
