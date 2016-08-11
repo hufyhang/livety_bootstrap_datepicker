@@ -35,3 +35,9 @@ Set the function to be triggered before date picker set-value event is triggered
 * `.datepicker('afterNotSureDate', function)`
 
 Set the function to be triggered after date picker set-value event is triggered when clicking `not sure exact day` button.
+
+* `.datepicker('onSelectDate', function)`
+
+Set the function to be triggered when selected a date.
+
+

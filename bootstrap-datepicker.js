@@ -492,6 +492,12 @@
       }
     },
 
+    onSelectDate: function (fn) {
+      if (typeof fn === 'function') {
+        this.o.onSelectDateFn = fn;
+      }
+    },
+
 		show: function(){
 			if (!this.isInline)
 				this.picker.appendTo('body');
@@ -1202,6 +1208,9 @@
 									month += 1;
 								}
 							}
+              if (typeof this.o.onSelectDateFn === 'function') {
+                this.o.onSelectDateFn(year, month, day);
+              }
 							this._setDate(UTCDate(year, month, day));
 						}
 						break;
@@ -1649,7 +1658,8 @@
     notSureDate: false,
     notSureDateText: 'Not Sure Exact Day',
     beforeNotSureDate: null,
-    afterNotSureDate: null
+    afterNotSureDate: null,
+    onSelectDateFn: null
 	};
 	var locale_opts = $.fn.datepicker.locale_opts = [
 		'format',
