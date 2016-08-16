@@ -40,4 +40,6 @@ Set the function to be triggered after date picker set-value event is triggered 
 
 Set the function to be triggered when selected a date.
 
+* `.datepicker('setActiveMonth', monthNum)`
 
+Highlight a month. `monthNum` is a 1-based month index.

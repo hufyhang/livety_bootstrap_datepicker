@@ -486,6 +486,10 @@
 
     },
 
+    setActiveMonth: function (month) {
+      this.o.activeMonth = month;
+    },
+
     setMinViewMode: function (mode) {
       if (typeof mode !== 'undefined') {
         this.o.minViewMode = mode;
@@ -676,6 +680,13 @@
 		place: function(){
 			if (this.isInline)
 				return;
+
+      var activeMonth = this.o.activeMonth;
+      if (activeMonth != null) {
+        activeMonth -= 1;
+        this.picker.find('.datepicker-months').find('.month:eq(' + activeMonth +')').addClass('active');
+      }
+
 			var calendarWidth = this.picker.outerWidth(),
 				calendarHeight = this.picker.outerHeight(),
 				visualPadding = 10,
@@ -1150,11 +1161,11 @@
 								month = target.parent().find('span').index(target);
 								year = this.viewDate.getUTCFullYear();
 
-                // if (this.o.getlastdayofmonth) {
-                //   // seems `month` is 0-based
-                //   var date = new date(year + '-' + (month + 1) + '-' + day);
-                //   day = new date(date.getfullyear(), date.getmonth() + 1, 0);
-                //   day = day.getdate();
+                // if (this.o.getLastDayOfMonth) {
+                //   // Seems `month` is 0-based
+                //   var date = new Date(year + '-' + (month + 1) + '-' + day);
+                //   day = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+                //   day = day.getDate();
                 // }
 
 								this.viewDate.setUTCMonth(month);
@@ -1659,7 +1670,8 @@
     notSureDateText: 'Not Sure Exact Day',
     beforeNotSureDate: null,
     afterNotSureDate: null,
-    onSelectDateFn: null
+    onSelectDateFn: null,
+    activeMonth: null
 	};
 	var locale_opts = $.fn.datepicker.locale_opts = [
 		'format',
