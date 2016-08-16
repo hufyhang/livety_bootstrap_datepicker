@@ -1150,12 +1150,12 @@
 								month = target.parent().find('span').index(target);
 								year = this.viewDate.getUTCFullYear();
 
-                if (this.o.getLastDayOfMonth) {
-                  // Seems `month` is 0-based
-                  var date = new Date(year + '-' + (month + 1) + '-' + day);
-                  day = new Date(date.getFullYear(), date.getMonth() + 1, 0);
-                  day = day.getDate();
-                }
+                // if (this.o.getLastDayOfMonth) {
+                //   // Seems `month` is 0-based
+                //   var date = new Date(year + '-' + (month + 1) + '-' + day);
+                //   day = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+                //   day = day.getDate();
+                // }
 
 								this.viewDate.setUTCMonth(month);
 								this._trigger('changeMonth', this.viewDate);
