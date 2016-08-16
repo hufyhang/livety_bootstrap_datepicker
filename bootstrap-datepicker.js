@@ -531,14 +531,14 @@
 			this.showMode();
 
 
-			if (
-				this.o.forceParse &&
-				(
-					this.isInput && this.element.val() ||
-					this.hasInput && this.element.find('input').val()
-				)
-			)
-				this.setValue(this.o.minViewMode);
+			// if (
+			// 	this.o.forceParse &&
+			// 	(
+			// 		this.isInput && this.element.val() ||
+			// 		this.hasInput && this.element.find('input').val()
+			// 	)
+			// )
+				// this.setValue(this.o.minViewMode);
 			this._trigger('hide');
 		},
 
