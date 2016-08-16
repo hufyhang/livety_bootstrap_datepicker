@@ -1011,8 +1011,11 @@
 				prevMonth.setUTCDate(prevMonth.getUTCDate()+1);
 			}
 			this.picker.find('.datepicker-days tbody').empty().append(html.join(''));
+      if (this.o.monthMode) {
+        this.picker.find('.datepicker-days tbody .day').removeClass('active');
+      }
 
-			var months = this.picker.find('.datepicker-months')
+      var months = this.picker.find('.datepicker-months')
 						.find('th:eq(1)')
 							.text(year)
 							.end()
@@ -1198,6 +1201,7 @@
 					case 'td':
                         //by gyy
 						if (target.is('.day') && !target.is('.disabled') && !target.is('.active')){
+              this.o.monthMode = false;
 							day = parseInt(target.text(), 10)||1;
 							year = this.viewDate.getUTCFullYear();
 							month = this.viewDate.getUTCMonth();
@@ -1476,6 +1480,7 @@
             event = 'touchend';
           }
           $notBtn.on(event, function () {
+            that.o.monthMode = true;
             var picked = window.__datepicker_pickedDate;
 
             if (typeof that.o.beforeNotSureDate === 'function') {
@@ -1656,6 +1661,7 @@
 		keyboardNavigation: true,
 		language: 'en',
 		minViewMode: 0,
+    monthMode: false,
 		multidate: false,
 		multidateSeparator: ',',
 		orientation: "auto",
