@@ -270,6 +270,11 @@
 				return parseInt(d, 10);
 			});
 
+      o.datesDisabled = o.datesDisabled||[];
+      o.datesDisabled = $.map(o.datesDisabled, function(d){
+        return new Date(d).getTime();
+      });
+
 			var plc = String(o.orientation).toLowerCase().split(/\s+/g),
 				_plc = o.orientation.toLowerCase();
 			plc = $.grep(plc, function(word){
@@ -677,6 +682,12 @@
 			this.updateNavArrows();
 		},
 
+    setDatesDisabled: function (datesDisabled) {
+      this._process_options({datesDisabled: datesDisabled});
+      this.update();
+      this.updateNavArrows();
+    },
+
 		place: function(){
 			if (this.isInline)
 				return;
@@ -921,7 +932,7 @@
 			if (this.dates.contains(date) !== -1)
 				cls.push('active');
 			if (date.valueOf() < this.o.startDate || date.valueOf() > this.o.endDate ||
-				$.inArray(date.getUTCDay(), this.o.daysOfWeekDisabled) !== -1){
+				$.inArray(date.getUTCDay(), this.o.daysOfWeekDisabled) !== -1 || $.inArray(date.getTime(), this.o.datesDisabled) !== -1){
 				cls.push('disabled');
 			}
 			if (this.range){
@@ -1660,6 +1671,7 @@
 		calendarWeeks: false,
 		clearBtn: false,
 		daysOfWeekDisabled: [],
+    datesDisabled: [],
 		endDate: Infinity,
 		forceParse: true,
 		format: 'mm/dd/yyyy',
