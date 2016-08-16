@@ -1324,6 +1324,11 @@
 				new_date.setUTCDate(--day);
 				new_date.setUTCMonth(new_month);
 			}
+      if (window.__datepicker_pickedDate != null) {
+        window.__datepicker_pickedDate.day = new_date.getDate();
+        window.__datepicker_pickedDate.month = new_date.getMonth();
+        window.__datepicker_pickedDate.year = new_date.getFullYear();
+      }
 			return new_date;
 		},
 
