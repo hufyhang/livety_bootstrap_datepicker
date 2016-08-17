@@ -44,6 +44,11 @@ Set the function to be triggered when selected a date.
 
 Highlight a month. `monthNum` is a 1-based month index.
 
+* `.datepicker('setActiveYear', year)`
+
+Limit the year when highlighting month.
+
+
 * `.datepicker('setDatesDisabled', [dateString])`
 
 Disable the given dates.

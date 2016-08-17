@@ -491,6 +491,14 @@
 
     },
 
+    setActiveYear: function (year) {
+      if (typeof year === 'number') {
+        this.o.activeYear = year;
+      } else {
+        this.o.activeYear = parseInt(year, 10);
+      }
+    },
+
     setActiveMonth: function (month) {
       this.o.activeMonth = month;
     },
@@ -516,6 +524,12 @@
 			this.place();
 			this._attachSecondaryEvents();
 			this._trigger('show');
+
+      var activeMonth = this.o.activeMonth;
+      if (activeMonth != null && this.o.activeYear === this.viewDate.getUTCFullYear()) {
+        activeMonth -= 1;
+        this.picker.find('.datepicker-months').find('.month:eq(' + activeMonth +')').addClass('active');
+      }
 		},
 
 		hide: function(){
@@ -691,12 +705,6 @@
 		place: function(){
 			if (this.isInline)
 				return;
-
-      var activeMonth = this.o.activeMonth;
-      if (activeMonth != null) {
-        activeMonth -= 1;
-        this.picker.find('.datepicker-months').find('.month:eq(' + activeMonth +')').addClass('active');
-      }
 
 			var calendarWidth = this.picker.outerWidth(),
 				calendarHeight = this.picker.outerHeight(),
@@ -1036,6 +1044,12 @@
 				if (d.getUTCFullYear() === year)
 					months.eq(d.getUTCMonth()).addClass('active');
 			});
+
+      var activeMonth = this.o.activeMonth;
+      if (activeMonth != null && this.o.activeYear === this.viewDate.getUTCFullYear()) {
+        activeMonth -= 1;
+        this.picker.find('.datepicker-months').find('.month:eq(' + activeMonth +')').addClass('active');
+      }
 
 			if (year < startYear || year > endYear){
 				months.addClass('disabled');
@@ -1694,7 +1708,8 @@
     beforeNotSureDate: null,
     afterNotSureDate: null,
     onSelectDateFn: null,
-    activeMonth: null
+    activeMonth: null,
+    activeYear: null
 	};
 	var locale_opts = $.fn.datepicker.locale_opts = [
 		'format',
