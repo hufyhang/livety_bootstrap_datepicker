@@ -693,7 +693,11 @@
         ceaseEvent = false;
       }
 			this._process_options({startDate: startDate});
-			this.update(ceaseEvent);
+      if (ceaseEvent === true) {
+        this.updateSilent();
+      } else {
+        this.update();
+      }
 			this.updateNavArrows();
 		},
 
@@ -702,7 +706,11 @@
         ceaseEvent = false;
       }
 			this._process_options({endDate: endDate});
-			this.update(ceaseEvent);
+      if (ceaseEvent === true) {
+        this.updateSilent();
+      } else {
+        this.update();
+      }
 			this.updateNavArrows();
 		},
 
@@ -833,6 +841,61 @@
 		},
 
 		_allow_update: true,
+    updateSilent: function () {
+      			if (!this._allow_update)
+				return;
+
+			var oldDates = this.dates.copy(),
+				dates = [],
+				fromArgs = false;
+			if (arguments.length){
+        if (typeof arguments[0] !== 'boolean') {
+          $.each(arguments, $.proxy(function(i, date){
+            if (date instanceof Date)
+              date = this._local_to_utc(date);
+            dates.push(date);
+          }, this));
+          fromArgs = true;
+        }
+			}
+			else {
+				dates = this.isInput
+						? this.element.val()
+						: this.element.data('date') || this.element.find('input').val();
+				if (dates && this.o.multidate)
+					dates = dates.split(this.o.multidateSeparator);
+				else
+					dates = [dates];
+				delete this.element.data().date;
+			}
+
+			dates = $.map(dates, $.proxy(function(date){
+				return DPGlobal.parseDate(date, this.o.format, this.o.language);
+			}, this));
+			dates = $.grep(dates, $.proxy(function(date){
+				return (
+					date < this.o.startDate ||
+					date > this.o.endDate ||
+					!date
+				);
+			}, this), true);
+			this.dates.replace(dates);
+
+			if (this.dates.length)
+				this.viewDate = new Date(this.dates.get(-1));
+			else if (this.viewDate < this.o.startDate)
+				this.viewDate = new Date(this.o.startDate);
+			else if (this.viewDate > this.o.endDate)
+				this.viewDate = new Date(this.o.endDate);
+
+			if (fromArgs){
+				// setting date by clicking
+				this.setValue(this.o.minViewMode);
+			}
+
+			this.fill();
+    },
+
 		update: function(ceaseEvent){
 			if (!this._allow_update)
 				return;
