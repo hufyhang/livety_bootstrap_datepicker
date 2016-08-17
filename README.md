@@ -53,6 +53,8 @@ Limit the year when highlighting month.
 
 Disable the given dates.
 
-* `.datepicker('updateMonth', dateString)`
+* `.datepicker('updateMonth', dateString, ceaseEvent)`
 
 Update date in month mode. Notice that `dateString` has to be in dashed format, i.e. YYYY-mm-dd
+
+If `ceaseEvent` is `true`, the `change` event will not be triggered.

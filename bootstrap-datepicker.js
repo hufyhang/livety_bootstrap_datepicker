@@ -503,7 +503,7 @@
       this.o.activeMonth = month;
     },
 
-    updateMonth: function (dateString) {
+    updateMonth: function (dateString, ceaseEvent) {
       var tokens = dateString.split('-');
       this.o.monthMode = true;
       var year = parseInt(tokens[0], 10);
@@ -515,7 +515,7 @@
         day: day
       };
       window.__bootstrap_datepicker_empty_date = true;
-      this._setDate(UTCDate(year, month, day), undefined, this.o.minViewMode);
+      this._setDate(UTCDate(year, month, day), undefined, this.o.minViewMode, ceaseEvent);
       window.__bootstrap_datepicker_empty_date = false;
     },
 
@@ -1294,15 +1294,17 @@
 					this.dates.remove(0);
 		},
 
-		_setDate: function(date, which, minViewMode){
+		_setDate: function(date, which, minViewMode, ceaseEvent){
 			if (!which || which === 'date')
 				this._toggle_multidate(date && new Date(date));
 			if (!which || which  === 'view')
 				this.viewDate = date && new Date(date);
 
 			this.fill();
-			this.setValue(minViewMode);
-			this._trigger('changeDate');
+      this.setValue(minViewMode);
+      if (ceaseEvent !== true) {
+        this._trigger('changeDate');
+      }
 			var element;
 			if (this.isInput){
 				element = this.element;
