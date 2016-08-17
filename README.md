@@ -55,4 +55,4 @@ Disable the given dates.
 
 * `.datepicker('updateMonth', dateString)`
 
-Update date in month mode.
+Update date in month mode. Notice that `dateString` has to be in dashed format, i.e. YYYY-mm-dd
