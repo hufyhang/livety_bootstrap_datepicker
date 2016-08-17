@@ -503,6 +503,22 @@
       this.o.activeMonth = month;
     },
 
+    updateMonth: function (dateString) {
+      var tokens = dateString.split('-');
+      this.o.monthMode = true;
+      var year = parseInt(tokens[0], 10);
+      var month = parseInt(tokens[1], 10) - 1;
+      var day = parseInt(tokens[2], 10);
+      window.__datepicker_pickedDate = {
+        year: year,
+        month: month,
+        day: day
+      };
+      window.__bootstrap_datepicker_empty_date = true;
+      this._setDate(UTCDate(year, month, day), undefined, this.o.minViewMode);
+      window.__bootstrap_datepicker_empty_date = false;
+    },
+
     setMinViewMode: function (mode) {
       if (typeof mode !== 'undefined') {
         this.o.minViewMode = mode;

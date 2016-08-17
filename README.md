@@ -52,3 +52,7 @@ Limit the year when highlighting month.
 * `.datepicker('setDatesDisabled', [dateString])`
 
 Disable the given dates.
+
+* `.datepicker('updateMonth', dateString)`
+
+Update date in month mode.
