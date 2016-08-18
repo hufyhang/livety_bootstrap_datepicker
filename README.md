@@ -61,3 +61,7 @@ Disable the given dates.
 Update date in month mode. Notice that `dateString` has to be in dashed format, i.e. YYYY-mm-dd
 
 If `ceaseEvent` is `true`, the `change` event will not be triggered.
+
+* `.datepicker('clear')`
+
+Clear the date picker.

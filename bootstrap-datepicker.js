@@ -475,6 +475,21 @@
 			});
 		},
 
+    clear: function () {
+      this.o.__datepicker_date = null;
+      this.o.activeMonth = null;
+      this.o.activeYear = null;
+      var element;
+      if (this.isInput)
+        element = this.element;
+      else if (this.component)
+        element = this.element.find('input');
+      if (element)
+        element.val("").change();
+      this.update();
+      this.o.__bootstrap_datepicker_month_mode = false;
+    },
+
     beforeNotSureDate: function (fn) {
       if (typeof fn === 'function') {
         this.o.beforeNotSureDate = fn;
