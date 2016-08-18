@@ -21,6 +21,25 @@
  * ========================================================= */
 (function($, undefined){
 
+  function checkMonthMode(date, obj) {
+    var inMonthMode = false;
+    var handler = null;
+
+    if (typeof Livety !== 'undefined'
+        && typeof Livety.require === 'function'
+        && typeof Livety.require('date') !== 'undefined') {
+
+        handler = Livety.require('date').newInstance();
+        inMonthMode = handler.monthMode(date);
+        inMonthMode = handler.monthMode();
+    }
+
+    if (typeof obj !== 'undefined') {
+      obj.monthMode = inMonthMode;
+    }
+    return inMonthMode;
+  }
+
   var __isMobile = document.getElementsByTagName('html')[0].className.indexOf('touch') !== -1
 
 	var $window = $(window);
@@ -504,6 +523,7 @@
     },
 
     updateMonth: function (dateString, ceaseEvent) {
+      checkMonthMode(dateString, this);
       var tokens = dateString.split('-');
       this.o.monthMode = true;
       var year = parseInt(tokens[0], 10);
@@ -668,7 +688,6 @@
 			if (!this.isInput){
 				if (this.component){
           formatted = this.handleMinViewMode(formatted, minViewMode);
-
           this.element.find('input').val(formatted).change();
 				}
 			}
@@ -842,7 +861,7 @@
 
 		_allow_update: true,
     updateSilent: function () {
-      			if (!this._allow_update)
+      if (!this._allow_update)
 				return;
 
 			var oldDates = this.dates.copy(),
@@ -868,6 +887,12 @@
 					dates = [dates];
 				delete this.element.data().date;
 			}
+
+      var inMonthMode = false;
+      var that = this;
+      dates.forEach(function (d) {
+        inMonthMode = checkMonthMode(d, that.o);
+      });
 
 			dates = $.map(dates, $.proxy(function(date){
 				return DPGlobal.parseDate(date, this.o.format, this.o.language);
@@ -923,6 +948,13 @@
 					dates = [dates];
 				delete this.element.data().date;
 			}
+
+      var inMonthMode = false;
+      var that = this;
+      dates.forEach(function (d) {
+        inMonthMode = checkMonthMode(d, that.o);
+      });
+
 
 			dates = $.map(dates, $.proxy(function(date){
 				return DPGlobal.parseDate(date, this.o.format, this.o.language);
@@ -1016,7 +1048,7 @@
 				date.getUTCDate() === today.getDate()){
 				cls.push('today');
 			}
-			if (this.dates.contains(date) !== -1)
+			if (this.dates.contains(date) !== -1 && this.o.monthMode !== true)
 				cls.push('active');
 			if (date.valueOf() < this.o.startDate || date.valueOf() > this.o.endDate ||
 				$.inArray(date.getUTCDay(), this.o.daysOfWeekDisabled) !== -1 || $.inArray(date.getTime(), this.o.datesDisabled) !== -1){
@@ -1254,6 +1286,7 @@
 								if (element)
 									element.val("").change();
 								this.update();
+                this.o.__bootstrap_datepicker_month_mode = false;
 								this._trigger('changeDate');
 								if (this.o.autoclose)
 									this.hide();
@@ -1591,8 +1624,10 @@
             event = 'touchend';
           }
           $notBtn.on(event, function () {
+            that.o.__bootstrap_datepicker_month_mode = true;
             that.o.monthMode = true;
             var picked = window.__datepicker_pickedDate;
+            that.viewDate = UTCDate(picked.year, picked.month, picked.day);
 
             if (typeof that.o.beforeNotSureDate === 'function') {
               that.o.beforeNotSureDate(picked);
@@ -1855,6 +1890,21 @@
 			var part_re = /([\-+]\d+)([dmwy])/,
 				parts = date.match(/([\-+]\d+)([dmwy])/g),
 				part, dir, i;
+
+      if (typeof Livety !== 'undefined'
+          && typeof Livety.require === 'function'
+          && typeof Livety.require('date') !== 'undefined') {
+
+          var handler = Livety.require('date').newInstance();
+          handler.monthMode(date);
+          if (handler.monthMode()) {
+            date = handler.toDash(date);
+            date = handler.appendDashDate(date);
+            date = handler.i18n(date, true);
+          }
+
+      }
+
 			if (/^[\-+]\d+[dmwy]([\s,]+[\-+]\d+[dmwy])*$/.test(date)){
 				date = new Date();
 				for (i=0; i < parts.length; i++){
@@ -1862,7 +1912,7 @@
 					dir = parseInt(part[1]);
 					switch (part[2]){
 						case 'd':
-							date.setUTCDate(date.getUTCDate() + dir);
+              date.setUTCDate(date.getUTCDate() + dir);
 							break;
 						case 'm':
 							date = Datepicker.prototype.moveMonth.call(Datepicker.prototype, date, dir);

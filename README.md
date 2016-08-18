@@ -2,7 +2,10 @@
 
 ### Requirements
 
-Notice that to use this very fork, a `data-date-format` attribute __MUST__ be presented in the `html` node in DOM. It's format could be, for example, `d/m/Y`.
+1. Notice that to use this very fork, a `data-date-format` attribute __MUST__ be presented in the `html` node in DOM. It's format could be, for example, `d/m/Y`.
+
+2. Livety `Date` module is required.
+
 
 ### Changes
 
