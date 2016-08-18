@@ -568,10 +568,15 @@
 
 		show: function(){
       this.o.__datepicker_date = null;
-			if (!this.isInline)
-				this.picker.appendTo('body');
-            //by gyy
-            this.element.blur();
+			if (!this.isInline) {
+        var parent = 'body';
+        if (typeof this.o.parent === 'string') {
+          parent = this.o.parent;
+        }
+        this.picker.appendTo(parent);
+      }
+      //by gyy
+      this.element.blur();
 			this.picker.show();
 			this.place();
 			this._attachSecondaryEvents();
@@ -832,6 +837,11 @@
 				top += height;
 			else
 				top -= calendarHeight + parseInt(this.picker.css('padding-top'));
+
+      if (typeof this.o.parent === 'string') {
+        top = 0 - this.picker.outerHeight();
+        left = 0;
+      }
 
 			this.picker.css({
 				top: top,
@@ -1849,7 +1859,8 @@
     onSelectDateFn: null,
     activeMonth: null,
     activeYear: null,
-    __datepicker_date: null
+    __datepicker_date: null,
+    parent: null
 	};
 	var locale_opts = $.fn.datepicker.locale_opts = [
 		'format',

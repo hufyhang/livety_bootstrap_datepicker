@@ -11,6 +11,14 @@
 
 In addition to the original method and options, this fork provided:
 
+#### Options:
+
+* `parent`
+
+jQuery selector to the parent node of which the date picker is to be appended to.
+
+#### Method:
+
 * `.datepicker('setMinViewMode', minView)`
 
 Set min view mode for the selected date picker. Parameter `minView` indicates min view mode, i.e. 0 === day, 1 === month, 2 === year.
