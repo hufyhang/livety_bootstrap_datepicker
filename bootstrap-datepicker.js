@@ -552,6 +552,7 @@
     },
 
 		show: function(){
+      this.o.__datepicker_date = null;
 			if (!this.isInline)
 				this.picker.appendTo('body');
             //by gyy
@@ -702,8 +703,8 @@
 				format = this.o.format;
 
 			var lang = this.o.language;
-      if (this.dates.length === 0 && window.__datepicker_date != null) {
-        this.dates.replace([window.__datepicker_date]);
+      if (this.dates.length === 0 && this.o.__datepicker_date != null) {
+        this.dates.replace([this.o.__datepicker_date]);
       }
 			return $.map(this.dates, function(d){
 				return DPGlobal.formatDate(d, format, lang);
@@ -1154,6 +1155,9 @@
 							.end()
 						.find('span').removeClass('active');
 
+      if (this.dates.length === 0 && this.o.__datepicker_date != null) {
+        this.dates.replace([this.o.__datepicker_date]);
+      }
 			$.each(this.dates, function(i, d){
 				if (d.getUTCFullYear() === year)
 					months.eq(d.getUTCMonth()).addClass('active');
@@ -1394,7 +1398,7 @@
 		},
 
 		_setDate: function(date, which, minViewMode, ceaseEvent){
-      window.__datepicker_date = date;
+      this.o.__datepicker_date = date;
 			if (!which || which === 'date')
 				this._toggle_multidate(date && new Date(date));
 			if (!which || which  === 'view')
@@ -1829,7 +1833,8 @@
     afterNotSureDate: null,
     onSelectDateFn: null,
     activeMonth: null,
-    activeYear: null
+    activeYear: null,
+    __datepicker_date: null
 	};
 	var locale_opts = $.fn.datepicker.locale_opts = [
 		'format',
