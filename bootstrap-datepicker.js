@@ -702,6 +702,9 @@
 				format = this.o.format;
 
 			var lang = this.o.language;
+      if (this.dates.length === 0 && window.__datepicker_date != null) {
+        this.dates.replace([window.__datepicker_date]);
+      }
 			return $.map(this.dates, function(d){
 				return DPGlobal.formatDate(d, format, lang);
 			}).join(this.o.multidateSeparator);
@@ -1391,6 +1394,7 @@
 		},
 
 		_setDate: function(date, which, minViewMode, ceaseEvent){
+      window.__datepicker_date = date;
 			if (!which || which === 'date')
 				this._toggle_multidate(date && new Date(date));
 			if (!which || which  === 'view')
