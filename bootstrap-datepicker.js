@@ -418,9 +418,9 @@
                 [this.picker, {
                     touchend: $.proxy(this.click, this)
                 }],
-				[$(window), {
-					resize: $.proxy(this.place, this)
-				}],
+				// [$(window), {
+				// 	resize: $.proxy(this.place, this)
+				// }],
 				[$(document), {
 					'mousedown touchstart touchmove': $.proxy(function(e){
 						// Clicked outside the datepicker, hide it
