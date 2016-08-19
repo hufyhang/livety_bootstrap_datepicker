@@ -601,7 +601,7 @@
             $(".datepicker-background").removeClass("show");
             $("body").css({"overflow":"auto"});
 
-			this.picker.hide().detach();
+			this.picker.hide().css('position', '').detach();
 			this._detachSecondaryEvents();
 			this.viewMode = this.o.startView;
 			this.showMode();
