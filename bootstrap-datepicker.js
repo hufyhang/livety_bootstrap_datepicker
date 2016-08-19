@@ -1679,6 +1679,7 @@
           $notBtn.wrap('<tr></tr>');
         }
       }
+      this.picker.css('position', '');
     }
 	};
 
