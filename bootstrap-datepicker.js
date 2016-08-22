@@ -595,9 +595,17 @@
 		},
 
     updateShowUpOrigin: function () {
+
+      var elementTop = parseFloat(this.element.offset().top);
+      var elementLeft = parseFloat(this.element.offset().left);
+
+      var pickerLeft = parseFloat(this.picker.css('left'));
+      var offset = pickerLeft - elementLeft;
+
       var showUpCss = {
-        top: parseFloat(this.picker.css('top')),
-        left: parseFloat(this.picker.css('left')),
+        top: elementTop,
+        left: elementLeft,
+        offset: offset,
         viewport: {
           width: $(window).width(),
           height: $(window).height()
@@ -793,11 +801,11 @@
       if (typeof origin === 'undefined' || origin === null) {
         return;
       }
-      var originViewport = origin.viewport;
-      var currentViewportWidth = $(window).width();
-      var offset = currentViewportWidth - originViewport.width;
-      var left = origin.left + (offset / 2);
-      this.picker.css('left', left + 'px');
+      var originWidth = this.picker.data('show-up').viewport.width;
+
+      if ($(window).width() !== originWidth) {
+        this.place();
+      }
 
       this.updateShowUpOrigin();
     },
@@ -919,6 +927,7 @@
                 }
 
             }
+      this.updateShowUpOrigin();
 		},
 
 		_allow_update: true,
