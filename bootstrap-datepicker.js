@@ -421,6 +421,9 @@
 				// [$(window), {
 				// 	resize: $.proxy(this.place, this)
 				// }],
+        [$(window), {
+          resize: $.proxy(this.placeHorizontal, this)
+        }],
 				[$(document), {
 					'mousedown touchstart touchmove': $.proxy(function(e){
 						// Clicked outside the datepicker, hide it
@@ -587,9 +590,25 @@
         activeMonth -= 1;
         this.picker.find('.datepicker-months').find('.month:eq(' + activeMonth +')').addClass('active');
       }
+
+      this.updateShowUpOrigin();
 		},
 
+    updateShowUpOrigin: function () {
+      var showUpCss = {
+        top: parseFloat(this.picker.css('top')),
+        left: parseFloat(this.picker.css('left')),
+        viewport: {
+          width: $(window).width(),
+          height: $(window).height()
+        }
+      };
+
+      this.picker.data('show-up', showUpCss);
+    },
+
 		hide: function(){
+      this.picker.data('show-up', null);
 			if (this.isInline)
 				return;
 			if (!this.picker.is(':visible'))
@@ -767,6 +786,20 @@
       this._process_options({datesDisabled: datesDisabled});
       this.update();
       this.updateNavArrows();
+    },
+
+    placeHorizontal: function () {
+      var origin = this.picker.data('show-up');
+      if (typeof origin === 'undefined' || origin === null) {
+        return;
+      }
+      var originViewport = origin.viewport;
+      var currentViewportWidth = $(window).width();
+      var offset = currentViewportWidth - originViewport.width;
+      var left = origin.left + (offset / 2);
+      this.picker.css('left', left + 'px');
+
+      this.updateShowUpOrigin();
     },
 
 		place: function(){
