@@ -804,7 +804,18 @@
       var originWidth = this.picker.data('show-up').viewport.width;
 
       if ($(window).width() !== originWidth) {
+        var position = this.picker.css('position');
+        var top = this.picker.css('top');
+
         this.place();
+
+        if (typeof position !== 'undefined') {
+          this.picker.css('position', position);
+        }
+
+        if (typeof top !== 'undefined') {
+          this.picker.css('top', top);
+        }
       }
 
       this.updateShowUpOrigin();
