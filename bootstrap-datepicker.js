@@ -1702,14 +1702,15 @@
         if ($notBtn.length === 0) {
 
           var text = this.o.notSureDateText;
-          $notBtn = $('<th colspan="7" class="not-sure-date" style="display: table-cell;">' + text + '</th>');
+          $notBtn = $('<th colspan="7" class="not-sure-date" style="display: table-cell; z-index: 1;">' + text + '</th>');
 
           var that = this;
           var event = 'click';
           if (__isMobile) {
             event = 'touchend';
           }
-          $notBtn.on(event, function () {
+          $notBtn.on(event, function (evt) {
+            evt.stopPropagation();
             that.o.__bootstrap_datepicker_month_mode = true;
             that.o.monthMode = true;
             var picked = window.__datepicker_pickedDate;
@@ -1726,6 +1727,7 @@
             if (typeof that.o.afterNotSureDate === 'function') {
               that.o.afterNotSureDate(picked);
             }
+            return false;
           });
 
           $clearBtn.closest('tr').before($notBtn);
