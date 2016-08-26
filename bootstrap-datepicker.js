@@ -1724,6 +1724,16 @@
             that.o.__bootstrap_datepicker_month_mode = true;
             that.o.monthMode = true;
             var picked = window.__datepicker_pickedDate;
+            if (that.o.getLastDayOfMonth === true) {
+              var temp = new Date(picked.year, picked.month, picked.day);
+              temp = new Date(temp.getFullYear(), temp.getMonth() + 1, 0);
+              picked = {
+                year: temp.getFullYear(),
+                month: temp.getMonth(),
+                day: temp.getDate()
+              }
+              window.__datepicker_pickedDate = picked;
+            }
             that.viewDate = UTCDate(picked.year, picked.month, picked.day);
 
             if (typeof that.o.beforeNotSureDate === 'function') {
