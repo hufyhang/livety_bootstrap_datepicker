@@ -762,7 +762,12 @@
       if (typeof ceaseEvent === 'undefined') {
         ceaseEvent = false;
       }
-			this._process_options({startDate: startDate});
+			this._process_options({
+        startDate: startDate,
+        beforeNotSureDate: this.o.beforeNotSureDate,
+        afterNotSureDate: this.o.afterNotSureDate,
+        onSelectDateFn: this.o.onSelectDateFn
+      });
       if (ceaseEvent === true) {
         this.updateSilent();
       } else {
@@ -775,7 +780,12 @@
       if (typeof ceaseEvent === 'undefined') {
         ceaseEvent = false;
       }
-			this._process_options({endDate: endDate});
+			this._process_options({
+        endDate: endDate,
+        beforeNotSureDate: this.o.beforeNotSureDate,
+        afterNotSureDate: this.o.afterNotSureDate,
+        onSelectDateFn: this.o.onSelectDateFn
+      });
       if (ceaseEvent === true) {
         this.updateSilent();
       } else {
