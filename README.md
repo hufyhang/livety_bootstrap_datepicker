@@ -6,6 +6,8 @@
 
 2. Livety `Date` module is required.
 
+3. This library MUST to be compiled/packed as a part of entries in Webpack.
+
 
 ### Changes
 

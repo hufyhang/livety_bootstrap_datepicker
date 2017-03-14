@@ -25,11 +25,10 @@
     var inMonthMode = false;
     var handler = null;
 
-    if (typeof Livety !== 'undefined'
-        && typeof Livety.require === 'function'
-        && typeof Livety.require('date') !== 'undefined') {
+    if (typeof require === 'function'
+        && typeof require('date') !== 'undefined') {
 
-        handler = Livety.require('date').newInstance();
+        handler = require('date').newInstance();
         inMonthMode = handler.monthMode(date);
         inMonthMode = handler.monthMode();
     }
@@ -2002,11 +2001,10 @@
 				parts = date.match(/([\-+]\d+)([dmwy])/g),
 				part, dir, i;
 
-      if (typeof Livety !== 'undefined'
-          && typeof Livety.require === 'function'
-          && typeof Livety.require('date') !== 'undefined') {
+      if (typeof require === 'function'
+          && typeof require('date') !== 'undefined') {
 
-          var handler = Livety.require('date').newInstance();
+          var handler = require('date').newInstance();
           handler.monthMode(date);
           if (handler.monthMode()) {
             date = handler.toDash(date);
